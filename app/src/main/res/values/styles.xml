@@ -13,4 +13,9 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="TwitterTheme" parent="AppTheme" >
+        <item name="colorPrimary">@color/twitter_blue</item>
+        <item name="colorAccent">@color/twitter_blue_30</item>
+    </style>
+
 </resources>

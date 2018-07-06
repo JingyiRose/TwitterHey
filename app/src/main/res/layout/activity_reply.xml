@@ -29,14 +29,13 @@
         android:text="TextView" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/etReply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvRe"
         android:layout_toEndOf="@+id/ivReProfileImage"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="" />
+        android:inputType="textMultiLine" />
 
     <TextView
         android:id="@+id/tvRe"
@@ -45,4 +44,14 @@
         android:layout_below="@+id/tvReBody"
         android:layout_toEndOf="@+id/ivReProfileImage"
         android:text="" />
+
+    <Button
+        android:id="@+id/btReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="Reply"
+        android:onClick="onReply"/>
+
 </RelativeLayout>

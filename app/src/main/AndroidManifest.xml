@@ -8,15 +8,16 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+
         android:name=".TwitterApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/TwitterTheme">
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/TwitterTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +34,8 @@
                     android:scheme="@string/intent_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".TimeLineActivity" />
+        <activity android:name=".TimeLineActivity"
+            />
         <activity android:name=".ComposeActivity"></activity>
         <activity android:name=".ReplyActivity"></activity>
     </application>

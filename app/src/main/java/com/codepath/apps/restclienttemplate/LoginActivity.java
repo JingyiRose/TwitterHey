@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.codepath.apps.restclienttemplate.models.SampleModel;
 import com.codepath.apps.restclienttemplate.models.SampleModelDao;
@@ -14,7 +15,7 @@ import com.codepath.oauth.OAuthLoginActionBarActivity;
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
 
-    //ProgressBar progressBar;
+    ProgressBar progressBar;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		setContentView(R.layout.activity_login);
 
 
-
+		progressBar = findViewById(R.id.progressBar);
 
 		final SampleModel sampleModel = new SampleModel();
 		sampleModel.setName("CodePath");
@@ -55,7 +56,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		Intent i = new Intent(this, TimeLineActivity.class);
 		startActivity(i);
 
-        //progressBar.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
 
 	}
 
@@ -71,8 +72,8 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// This should be tied to a button used to login
 	public void loginToRest(View view) {
 		getClient().connect();
-        //progressBar = findViewById(R.id.progressBar);
-        //progressBar.setVisibility(View.VISIBLE);
+
+        progressBar.setVisibility(View.VISIBLE);
 	}
 
 }
