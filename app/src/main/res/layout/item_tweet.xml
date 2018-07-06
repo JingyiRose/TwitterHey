@@ -42,7 +42,7 @@
     <ImageButton
         android:id="@+id/ibReply"
         android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_height="26dp"
         android:layout_alignParentTop="false"
         android:layout_below="@+id/tvBody"
         android:layout_marginTop="0dp"
