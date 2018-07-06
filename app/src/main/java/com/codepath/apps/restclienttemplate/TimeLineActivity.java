@@ -33,6 +33,16 @@ public class TimeLineActivity extends AppCompatActivity {
     RecyclerView rvTweets;
     MenuItem miCompose;
     Tweet tweetReply;
+    public long lowestId;
+
+//    public void getLowestId(){
+//        lowestId = tweets.get(0).uid;
+//        for (Tweet item : tweets) {
+//            if(item.uid<lowestId){
+//                lowestId=item.uid;
+//            }
+//        }
+//    }
 
     private SwipeRefreshLayout swipeContainer;
 
@@ -46,6 +56,8 @@ public class TimeLineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_line);
 
+        //LowestId();
+
         client = TwitterApp.getRestClient(this);
 
         //find the RecyclerView
@@ -57,7 +69,10 @@ public class TimeLineActivity extends AppCompatActivity {
             @Override public void onPositionClicked(int position) {
                 // callback performed on click
                 tweetReply=tweets.get(position);
-                Toast.makeText(getApplicationContext(), "get Tweet"+tweetReply.user.name, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Reply "+tweetReply.user.name, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(TimeLineActivity.this, ReplyActivity.class);
+                i.putExtra("tweet", Parcels.wrap(tweetReply)); // pass arbitrary data to launched activity
+                startActivity(i);
             }
 
         });

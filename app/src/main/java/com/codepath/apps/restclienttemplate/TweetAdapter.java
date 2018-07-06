@@ -7,7 +7,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,7 +83,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         public TextView tvUsername;
         public TextView tvBody;
         public TextView tvTime;
-        public Button btReply;
+        public ImageButton ibReply;
 
         public WeakReference<ClickListener> listenerRef;
 
@@ -100,16 +100,18 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvTime = (TextView) itemView.findViewById(R.id.tvTime);
-            btReply = (Button) itemView.findViewById(R.id.btReply);
+            ibReply = (ImageButton) itemView.findViewById(R.id.ibReply);
 
             listenerRef = new WeakReference<>(listener);
-            btReply.setOnClickListener(this);
+            ibReply.setOnClickListener(this);
 
         }
 
+
+
         @Override
         public void onClick(View v) {
-            if (v.getId() == btReply.getId()) {
+            if (v.getId() == ibReply.getId()) {
                 Toast.makeText(v.getContext(), "ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(v.getContext(), "ROW PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
@@ -117,7 +119,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
             listenerRef.get().onPositionClicked(getAdapterPosition());
 
+
         }
+
     }
 
     public String getRelativeTimeAgo(String rawJsonDate) {

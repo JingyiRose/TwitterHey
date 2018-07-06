@@ -10,12 +10,19 @@ import com.codepath.apps.restclienttemplate.models.SampleModel;
 import com.codepath.apps.restclienttemplate.models.SampleModelDao;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
+
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
-	@Override
+
+    //ProgressBar progressBar;
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+
+
+
 
 		final SampleModel sampleModel = new SampleModel();
 		sampleModel.setName("CodePath");
@@ -48,6 +55,8 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		Intent i = new Intent(this, TimeLineActivity.class);
 		startActivity(i);
 
+        //progressBar.setVisibility(View.INVISIBLE);
+
 	}
 
 	// OAuth authentication flow failed, handle the error
@@ -62,6 +71,8 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// This should be tied to a button used to login
 	public void loginToRest(View view) {
 		getClient().connect();
+        //progressBar = findViewById(R.id.progressBar);
+        //progressBar.setVisibility(View.VISIBLE);
 	}
 
 }

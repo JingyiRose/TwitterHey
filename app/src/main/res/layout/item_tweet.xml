@@ -38,14 +38,16 @@
         android:layout_alignParentTop="true"
         android:text="TextView" />
 
-    <Button
-        android:id="@+id/btReply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:id="@+id/ibReply"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_alignParentTop="false"
         android:layout_below="@+id/tvBody"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/ivProfileImage"
-        android:onClick="replyPost"
-        android:text="Reply" />
+        android:src="@drawable/ic_reply"
+
+
+        />
 </RelativeLayout>
