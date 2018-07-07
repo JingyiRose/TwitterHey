@@ -50,5 +50,14 @@
         android:src="@drawable/ic_reply"
 
 
+
         />
+
+    <TextView
+        android:id="@+id/tvScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/tvUserName"
+        android:text="TextView" />
 </RelativeLayout>

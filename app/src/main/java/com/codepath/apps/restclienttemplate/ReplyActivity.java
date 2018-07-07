@@ -23,6 +23,7 @@ public class ReplyActivity extends AppCompatActivity {
 
     private TwitterClient client;
     TextView tvRe;
+    long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +40,15 @@ public class ReplyActivity extends AppCompatActivity {
         Tweet tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra("tweet"));
         tvReUserName.setText(tweet.user.name);
         tvReBody.setText(tweet.body);
-        tvRe.setText("@ " + tweet.user.name.toString());
+        tvRe.setText("@ " + tweet.user.screenName.toString());
+        id= tweet.uid;
         Glide.with(this).load(tweet.user.profileImageUrl).into(ivReProfileImage);
     }
 
     public void onReply(View v) {
         EditText etReply = (EditText) findViewById(R.id.etReply);
 
-
-        client.sendTweet(tvRe.getText().toString()+"\n"+etReply.getText().toString(), new JsonHttpResponseHandler() {
+        client.replyTo(id,tvRe.getText().toString()+"\n"+etReply.getText().toString(), new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

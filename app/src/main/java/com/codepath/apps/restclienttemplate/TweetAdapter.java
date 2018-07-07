@@ -1,6 +1,8 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -10,12 +12,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
-import java.lang.ref.WeakReference;
+import org.parceler.Parcels;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -24,12 +26,10 @@ import java.util.Locale;
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
 
     private List<Tweet> mTweets;
-    private ClickListener listener;
 
     //pass in the Tweets array in the constructor
-    public TweetAdapter(Context context, List<Tweet> tweets, ClickListener listener){
+    public TweetAdapter(Context context, List<Tweet> tweets){
         this.context= context;
-        this.listener = listener;
         mTweets = tweets;
     }
 
@@ -43,7 +43,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View tweetView = inflater.inflate(R.layout.item_tweet, parent, false);
-        ViewHolder viewHolder = new ViewHolder(tweetView,listener);
+        ViewHolder viewHolder = new ViewHolder(tweetView);
         return  viewHolder;
     }
 
@@ -59,6 +59,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.tvUsername.setText(tweet.user.name);
         holder.tvBody.setText(tweet.body);
         holder.tvTime.setText(getRelativeTimeAgo(tweet.createdAt));
+        holder.tvScreenName.setText(" @"+tweet.user.screenName);
+
 
         Glide.with(context).load(tweet.user.profileImageUrl).into(holder.ivProfileImage);
 
@@ -71,26 +73,18 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
     //create ViewHolder class
 
-    public interface ClickListener {
 
-        void onPositionClicked(int position);
-
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView ivProfileImage;
         public TextView tvUsername;
         public TextView tvBody;
         public TextView tvTime;
         public ImageButton ibReply;
-
-        public WeakReference<ClickListener> listenerRef;
-
+        public TextView tvScreenName;
 
 
-
-        public ViewHolder(View itemView, ClickListener listener){
+        public ViewHolder(View itemView) {
             super(itemView); //take in inflated layout
 
 
@@ -101,24 +95,28 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvTime = (TextView) itemView.findViewById(R.id.tvTime);
             ibReply = (ImageButton) itemView.findViewById(R.id.ibReply);
+            tvScreenName =(TextView) itemView.findViewById(R.id.tvScreenName);
 
-            listenerRef = new WeakReference<>(listener);
-            ibReply.setOnClickListener(this);
+            ibReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position=getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        // get the movie at the position, this won't work if the class is static
+                        Tweet tweet = mTweets.get(position);
+                        //create intent for new activity
+                        Intent intent = new Intent(context, ReplyActivity.class);
+                        // serialize the movie using parceler, use its short name as a key
+                        //intent.putExtra("replying_to","@"+tweet.user.screenName);
+                        //intent.putExtra("uid",tweet.uid);
+                        intent.putExtra("tweet", Parcels.wrap(tweet));
+                        intent.putExtra("tweetName", tweet.user.screenName);
+                        // show the activity
+                        ((Activity)context).startActivityForResult(intent, 404);
+                    }
 
-        }
-
-
-
-        @Override
-        public void onClick(View v) {
-            if (v.getId() == ibReply.getId()) {
-                Toast.makeText(v.getContext(), "ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(v.getContext(), "ROW PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
-            }
-
-            listenerRef.get().onPositionClicked(getAdapterPosition());
-
+                }
+            });
 
         }
 

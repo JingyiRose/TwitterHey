@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -33,16 +32,6 @@ public class TimeLineActivity extends AppCompatActivity {
     RecyclerView rvTweets;
     MenuItem miCompose;
     Tweet tweetReply;
-    public long lowestId;
-
-//    public void getLowestId(){
-//        lowestId = tweets.get(0).uid;
-//        for (Tweet item : tweets) {
-//            if(item.uid<lowestId){
-//                lowestId=item.uid;
-//            }
-//        }
-//    }
 
     private SwipeRefreshLayout swipeContainer;
 
@@ -56,26 +45,15 @@ public class TimeLineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_line);
 
-        //LowestId();
-
         client = TwitterApp.getRestClient(this);
 
         //find the RecyclerView
         rvTweets = (RecyclerView) findViewById(R.id.rvTweet);
+
         //init the arrayList (data source)
         tweets = new ArrayList<>();
         //construct the adapter from this datasource
-        tweetAdapter = new TweetAdapter(this, tweets,new TweetAdapter.ClickListener() {
-            @Override public void onPositionClicked(int position) {
-                // callback performed on click
-                tweetReply=tweets.get(position);
-                Toast.makeText(getApplicationContext(), "Reply "+tweetReply.user.name, Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(TimeLineActivity.this, ReplyActivity.class);
-                i.putExtra("tweet", Parcels.wrap(tweetReply)); // pass arbitrary data to launched activity
-                startActivity(i);
-            }
-
-        });
+        tweetAdapter = new TweetAdapter(this, tweets);
 
         // RecyclerView setup (layout manager, use adapter)
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
@@ -161,11 +139,8 @@ public class TimeLineActivity extends AppCompatActivity {
         hideProgressBar();
     }
 
-
-
     // REQUEST_CODE can be any value we like, used to determine the result type later
     private final int REQUEST_CODE = 20;
-
 
     private void populateTimeLine() {
 
@@ -252,14 +227,9 @@ public class TimeLineActivity extends AppCompatActivity {
         }
     }
 
-    private final int REQUEST_CODE_2 = 20;
-    public void replyPost() {
 
 
-        Intent i = new Intent(TimeLineActivity.this, ReplyActivity.class);
-        i.putExtra("mode", 3); // pass arbitrary data to launched activity
-        startActivityForResult(i, REQUEST_CODE_2);
-    }
+
 
 
 }
